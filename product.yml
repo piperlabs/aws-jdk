@@ -1,3 +1,35 @@
 schema-version: 1.0
-name: aws-jdk
+name: aws-jdk 
 
+volumes:
+  - src:"{{ srcDir }}":.
+
+const:
+  product: amazon-corretto
+  javaHome: "{{ installDir }}/jdk"
+
+var:
+  version: "8"
+  srcDir: /usr/src
+  javaOptions:
+
+provision:
+   - url: 
+       from: https://corretto.aws/downloads/latest/{{ product }}-{{ version }}-x64-linux-jdk.tar.gz
+       after: link.sh
+   - copy:
+       from: java.security
+       todir: "{{ javaHome }}/jre/lib/security"
+   - env: JAVA_HOME={{ javaHome }}
+   - env: JAVA_TOOL_OPTIONS={{ javaOptions }}
+   - systempath: "$JAVA_HOME/bin"
+
+command:
+  javac:
+    - shell:
+        inline: javac {{ .args }}
+        directory: "{{ srcDir }}"
+  java:
+    - shell:
+        inline: java {{ .args }}
+        directory: "{{ srcDir }}"
