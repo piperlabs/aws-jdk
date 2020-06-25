@@ -26,10 +26,8 @@ provision:
 
 command:
   javac:
-    - shell:
-        inline: javac {{ .args }}
-        directory: "{{ srcDir }}"
+    inline: javac {{ .args }}
+    directory: "{{ srcDir }}"
   java:
-    - shell:
-        inline: java {{ .args }}
-        directory: "{{ srcDir }}"
+    inline: java {{ .args }}
+    directory: "{{ srcDir }}"
