@@ -1,33 +1,34 @@
 schema-version: 1.0
 name: aws-jdk 
 
-volumes:
-  - src:"{{ srcDir }}":.
+persistent-dirs:
+  - src:"{% srcDir %}":"{% user %}":.
 
 const:
   product: amazon-corretto
-  javaHome: "{{ installDir }}/jdk"
+  javaHome: "{% installDir %}/jdk"
 
 var:
   version: "8"
   srcDir: /usr/src
   javaOptions:
+  user: default
+
+user: "{% user %}"
+directory: "{% srcDir %}"
 
 provision:
    - url: 
-       from: https://corretto.aws/downloads/latest/{{ product }}-{{ version }}-x64-linux-jdk.tar.gz
+       from: https://corretto.aws/downloads/latest/{% product %}-{% version %}-x64-linux-jdk.tar.gz
        after: link.sh
    - copy:
        from: java.security
-       todir: "{{ javaHome }}/jre/lib/security"
-   - env: JAVA_HOME={{ javaHome }}
-   - env: JAVA_TOOL_OPTIONS={{ javaOptions }}
+       todir: "{% javaHome %}/jre/lib/security"
+   - env: JAVA_HOME={% javaHome %}
+   - env: JAVA_TOOL_OPTIONS={% javaOptions %}
    - systempath: "$JAVA_HOME/bin"
 
 command:
-  javac:
-    inline: javac {{ .args }}
-    directory: "{{ srcDir }}"
-  java:
-    inline: java {{ .args }}
-    directory: "{{ srcDir }}"
+  javac: javac {{ .args }}
+  java: java {{ .args }}
+
