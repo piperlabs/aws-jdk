@@ -16,6 +16,8 @@ var:
 
 user: "{% user %}"
 directory: "{% srcDir %}"
+envs:
+  - JAVA_TOOL_OPTIONS={% javaOptions %}
 
 provision:
    - url: 
@@ -25,7 +27,6 @@ provision:
        from: java.security
        todir: "{% javaHome %}/jre/lib/security"
    - env: JAVA_HOME={% javaHome %}
-   - env: JAVA_TOOL_OPTIONS={% javaOptions %}
    - systempath: "$JAVA_HOME/bin"
 
 command:
