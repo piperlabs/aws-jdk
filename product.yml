@@ -22,9 +22,9 @@ envs:
 provision:
    - url: 
        from: https://corretto.aws/downloads/latest/{% product %}-{% version %}-x64-linux-jdk.tar.gz
-       after: link.sh
+       after: "{{ .templates }}/link.sh"
    - copy:
-       from: java.security
+       from: "{{ .resources }}/java.security"
        todir: "{% javaHome %}/jre/lib/security"
    - env: JAVA_HOME={% javaHome %}
    - systempath: "$JAVA_HOME/bin"
