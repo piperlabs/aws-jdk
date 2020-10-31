@@ -1,5 +1,4 @@
 schema-version: 1.0
-name: aws-jdk 
 
 persistent-dirs:
   - src:"{% srcDir %}":"{% user %}":.
