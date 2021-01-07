@@ -23,7 +23,7 @@ provision:
        from: https://corretto.aws/downloads/latest/{% product %}-{% version %}-x64-linux-jdk.tar.gz
        after: "{{ .templates }}/link.sh"
    - copy:
-       from: "{{ .resources }}/java.security"
+       resource: "java.security"
        todir: "{% javaHome %}/jre/lib/security"
    - env: JAVA_HOME={% javaHome %}
    - systempath: "$JAVA_HOME/bin"
